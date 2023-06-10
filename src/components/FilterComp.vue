@@ -33,13 +33,11 @@ export default {
         { id: 1, name: "Action" },
         { id: 2, name: "Comedy" },
         { id: 3, name: "Drama" },
-        // Agrega aquí más géneros si es necesario
       ],
     };
   },
   methods: {
     applyFilters() {
-      // Emitir un evento al componente padre con los filtros seleccionados
       this.$emit("filters-applied", {
         genre: this.selectedGenre,
         duration: this.selectedDuration,
