@@ -1,18 +1,22 @@
 <template>
-  <div>
+  <div class="container">
     <h2>Popular Movies</h2>
-    <div class="movie-grid">
-      <div v-for="movie in movies" :key="movie.id" class="movie-card">
-        <router-link :to="`/movie/${movie.id}`">
-          <div class="movie-content">
-            <img
-              :src="getImageUrl(movie.poster_path)"
-              :alt="movie.title"
-              class="movie-poster"
-            />
-            <p class="movie-title">{{ movie.title }}</p>
+    <div class="row">
+      <div class="col-md-4" v-for="movie in movies" :key="movie.id">
+        <div class="card">
+          <img
+            :src="getImageUrl(movie.poster_path)"
+            :alt="movie.title"
+            class="card-img-top"
+          />
+          <div class="card-body">
+            <h5 class="card-title">{{ movie.title }}</h5>
+            <p class="card-text">{{ movie.description }}</p>
+            <router-link :to="`/movie/${movie.id}`" class="btn btn-primary"
+              >View Details</router-link
+            >
           </div>
-        </router-link>
+        </div>
       </div>
     </div>
   </div>
@@ -52,30 +56,8 @@ export default {
 </script>
 
 <style scoped>
-.movie-grid {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-
-.movie-card {
-  text-align: center;
-  margin: 10px;
-}
-
-.movie-content {
-  margin-bottom: 10px;
-}
-
-.movie-poster {
-  width: 200px;
-  height: 300px;
-  object-fit: cover;
-}
-
-.movie-title {
-  font-size: 16px;
-  font-weight: bold;
-  margin-top: 5px;
+.card {
+  width: 18rem;
+  margin-bottom: 20px;
 }
 </style>
