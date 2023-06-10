@@ -1,8 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router';
 
-// Importa tus componentes para las rutas
 import MovieList from '@/components/MovieList.vue';
-import MovieDetails from '@/components/MovieDetails.vue';
+import MovieDetail from '@/components/MovieDetail.vue';
 
 const routes = [
   {
@@ -13,7 +12,7 @@ const routes = [
   {
     path: '/movie/:id',
     name: 'movie-details',
-    component: MovieDetails,
+    component: MovieDetail,
   },
   // 
 ];
