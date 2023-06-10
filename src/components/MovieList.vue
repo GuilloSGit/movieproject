@@ -1,10 +1,10 @@
 <template>
   <div>
     <h2>Popular Movies</h2>
-    <ul>
-      <li v-for="movie in movies" :key="movie.id">
+    <div class="movie-grid">
+      <div v-for="movie in movies" :key="movie.id" class="movie-card">
         <router-link :to="`/movie/${movie.id}`">
-          <div class="movie-card">
+          <div class="movie-content">
             <img
               :src="getImageUrl(movie.poster_path)"
               :alt="movie.title"
@@ -13,8 +13,8 @@
             <p class="movie-title">{{ movie.title }}</p>
           </div>
         </router-link>
-      </li>
-    </ul>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -52,19 +52,30 @@ export default {
 </script>
 
 <style scoped>
+.movie-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
 .movie-card {
   text-align: center;
+  margin: 10px;
+}
+
+.movie-content {
+  margin-bottom: 10px;
 }
 
 .movie-poster {
   width: 200px;
   height: 300px;
   object-fit: cover;
-  margin-bottom: 10px;
 }
 
 .movie-title {
   font-size: 16px;
   font-weight: bold;
+  margin-top: 5px;
 }
 </style>
