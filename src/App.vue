@@ -1,39 +1,29 @@
 <template>
-  <HeaderComp></HeaderComp>
-  <SlidebarComp></SlidebarComp>
-  <FooterComp></FooterComp>
+  <div id="app">
+    <HeaderComp></HeaderComp>
+    <SlidebarComp></SlidebarComp>
+    <MovieList></MovieList>
+    <FooterComp></FooterComp>
+  </div>
 </template>
 
 <script>
-import HeaderComp from './components/HeaderComp.vue';
-import FooterComp from './components/FooterComp.vue';
-import SlidebarComp from './components/SlidebarComp.vue';
+import HeaderComp from "./components/HeaderComp.vue";
+import FooterComp from "./components/FooterComp.vue";
+import SlidebarComp from "./components/SlidebarComp.vue";
+import MovieList from "./components/MovieList.vue";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
     HeaderComp,
     FooterComp,
-    SlidebarComp
-}
-}
+    SlidebarComp,
+    MovieList,
+  },
+};
 </script>
 
 <style>
-
-/*
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-  /*WTFIM
-}
-*/
-
-@import './assets/css/styles.css';
+@import "./assets/css/styles.css";
 </style>
-
-
