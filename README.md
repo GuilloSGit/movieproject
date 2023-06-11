@@ -1,24 +1,2 @@
 # movieproject
-
-## Project setup
-```
-npm install
-```
-
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+## Las rutas no funcionan y estuve batallando un poco con los filtros, sin embargo trabajando por componentes si conozco el proceso de realizar las rutas de forma correcta en un single website, realmente aún no está terminado...
