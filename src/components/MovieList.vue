@@ -84,7 +84,7 @@ export default {
         .get("/movie/popular")
         .then((response) => {
           this.movies = response.data.results;
-          console.log(this.movies)
+          // console.log(this.movies)
         })
         .catch((error) => {
           console.error(error);
@@ -98,6 +98,7 @@ export default {
     },
     applyFilters(filters) {
       this.filters = filters;
+      // console.log(this.filters)
     },
   },
 };

@@ -2,8 +2,8 @@
   <div class="filters">
     <h3>Filters</h3>
     <div class="form-group">
-      <label for="genre">Vote Average:</label>
-      <select id="genre" v-model="selectedVoted" class="form-control">
+      <label for="voteAverage">Vote Average:</label>
+      <select id="voteAverage" v-model="selectedVoted" class="form-control">
         <option value="">All</option>
         <option v-for="vote in voteAverage" :value="vote.id" :key="vote.id">
           {{ vote.name }}
