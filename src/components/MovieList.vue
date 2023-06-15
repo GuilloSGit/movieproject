@@ -15,7 +15,8 @@
           <div class="card-body">
             <h5 class="card-title">{{ movie.title }}</h5>
             <p class="card-text">{{ movie.description }}</p>
-            <router-link :to="`/movie/${movie.id}`" class="btn btn-primary"
+            
+            <router-link :to="{name: 'movies.details', params:{id:movie.id }}" class="btn btn-primary"
               >View Details</router-link
             >
           </div>
@@ -76,6 +77,7 @@ export default {
         .get("/movie/popular")
         .then((response) => {
           this.movies = response.data.results;
+          console.log(this.movies)
         })
         .catch((error) => {
           console.error(error);
