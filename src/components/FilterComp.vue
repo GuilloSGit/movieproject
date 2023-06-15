@@ -24,8 +24,10 @@
 </template>
 
 <script>
+import axios from "axios";
+import apiClient from "@/api";
 export default {
-  data() {
+  /*  data() {
     return {
       selectedGenre: "",
       selectedDuration: "",
@@ -42,6 +44,77 @@ export default {
         genre: this.selectedGenre,
         duration: this.selectedDuration,
       });
+    },
+  }, */
+  data() {
+    return {
+      activeSubFilters: [],
+    };
+  },
+  computed: {
+    activeFilter() {
+      return this.$store.state.filters.activeFilter;
+    },
+    filters() {
+      return this.$store.state.filters.filters;
+    },
+    activeSubFilter() {
+      return this.$store.state.filters.activeSubFilter;
+    },
+    subfilters() {
+      return this.$store.state.filters.subfilters;
+    },
+  },
+  async fetch() {
+    let env = this;
+    await axios.get(apiClient).then(({ data }) => {
+      Object.keys(data.message).forEach(function (key) {
+        env.addFilter(key);
+        if (data.message[key].length > 0) {
+          // Has sub-breed, save in separate list for API fetching
+          env.addSubFilter(key);
+        }
+      });
+    });
+  },
+  methods: {
+    addFilter(filter) {
+      this.$store.commit("filters/add", filter);
+    },
+    addSubFilter(subfilter) {
+      this.$store.commit("filters/addSub", subfilter);
+    },
+    filterByBread(event) {
+      let breed = event.target.value;
+      this.$store.commit("filters/toggle", breed);
+      if (!this.subfilters.includes(breed)) {
+        // Reset sub-filter toggle
+        this.$store.commit("filters/toggleSub", null);
+        this.activeSubFilters = [];
+      } else {
+        this.loadSubBreeds();
+      }
+    },
+    filterBySubBread(event) {
+      this.$store.commit("filters/toggleSub", event.target.value);
+    },
+    loadSubBreeds() {
+      let env = this;
+      axios
+        .get("https://dog.ceo/api/breed/" + this.activeFilter + "/list")
+        .then(({ data }) => {
+          if (data.message.length > 0) {
+            env.activeSubFilters = data.message;
+          } else {
+            env.activeSubFilters = [];
+          }
+        });
+    },
+    reset() {
+      this.activeSubFilters = [];
+      this.$store.commit("filters/toggle", null);
+      this.$store.commit("filters/toggleSub", null);
+      document.querySelector("select.primary-filter").selectedIndex = null;
     },
   },
 };
@@ -104,5 +177,4 @@ button.btn-primary:focus {
   outline: none;
   box-shadow: none;
 }
-
 </style>
