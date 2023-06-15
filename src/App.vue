@@ -2,7 +2,7 @@
   <div id="app">
     <HeaderComp></HeaderComp>
     <SlidebarComp></SlidebarComp>
-    <router-view/>
+    <router-view></router-view>
     <FooterComp></FooterComp>
   </div>
 </template>
@@ -18,7 +18,7 @@ export default {
     HeaderComp,
     FooterComp,
     SlidebarComp,
-  }
+  },
 };
 </script>
 

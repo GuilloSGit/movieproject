@@ -1,53 +1,49 @@
 <template>
-  <div class="movie-detail">
-    <div class="movie-poster">
-      <img :src="movie.poster_path" alt="Movie Poster" />
+  <div class="container">
+    <h2>Movie Detail</h2>
+    <div v-if="selectedMovie">
+      <h3>{{ selectedMovie.title }}</h3>
+      <h4>{{ selectedMovie.overview }}</h4>
+      <img :src="getImageUrl(selectedMovie.poster_path)" :alt="selectedMovie.title" />
+      <p>{{ selectedMovie.description }}</p>
     </div>
-    <div class="movie-info">
-      <h2>{{ movie.title }}</h2>
-      <p>{{ movie.overview }}</p>
+    <div v-else>
+      <p>Loading movie detail...</p>
     </div>
   </div>
 </template>
 
 <script>
+import apiClient from "@/api";
+
 export default {
-  name: "MovieDetail",
-  props: ["movie"],
+  data() {
+    return {
+      selectedMovie: null,
+    };
+  },
+  created() {
+    this.fetchMovieById();
+  },
+  methods: {
+    fetchMovieById() {
+      const id = this.$route.params.id;
+      apiClient
+        .get(`/movie/${id}`)
+        .then((response) => {
+          this.selectedMovie = response.data;
+          console.log(this.selectedMovie)
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    },
+    getImageUrl(path) {
+      if (path) {
+        return `https://image.tmdb.org/t/p/w500/${path}`;
+      }
+      return "";
+    },
+  },
 };
 </script>
-
-<style scoped>
-.movie-detail {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  gap: 20px;
-  padding: 20px;
-  background-color: #f5f5f5;
-  border-radius: 8px;
-}
-
-.movie-poster img {
-  width: 200px;
-  height: auto;
-  border-radius: 4px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.movie-info {
-  flex-grow: 1;
-}
-
-.movie-info h2 {
-  font-size: 24px;
-  margin-bottom: 10px;
-}
-
-.movie-info p {
-  font-size: 16px;
-  line-height: 1.5;
-  color: #666666;
-}
-</style>

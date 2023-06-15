@@ -4,7 +4,7 @@
     <h2>Popular Movies</h2>
     <br />
     <filters @filters-applied="applyFilters"></filters>
-    <div class="row">
+    <div class="row lista">
       <div class="col-md-4" v-for="movie in filteredMovies" :key="movie.id">
         <div class="card">
           <img
@@ -15,12 +15,16 @@
           <div class="card-body">
             <h5 class="card-title">{{ movie.title }}</h5>
             <p class="card-text">{{ movie.description }}</p>
-            
-            <router-link :to="{name: 'movies.details', params:{id:movie.id }}" class="btn btn-primary"
-              >View Details</router-link
-            >
+            <router-link
+              :to="{ name: 'movies.details', params: { id: movie.id } }"
+              class="btn btn-primary">
+              View Details
+            </router-link>
           </div>
         </div>
+      </div>
+      <div>
+        <h4 v-if="filteredMovies.length === 0">No se encontró resultado</h4>
       </div>
     </div>
   </div>
@@ -39,9 +43,14 @@ export default {
     return {
       movies: [],
       filters: {
-        genre: null,
-        duration: null,
+        voted: null,
+        search: "",
       },
+      voteAverage: [
+        { id: 1, name: "Mayor a 8" },
+        { id: 2, name: "Entre 8 y 6" },
+        { id: 3, name: "Menor a 6" },
+      ],
     };
   },
   mounted() {
@@ -51,26 +60,24 @@ export default {
     filteredMovies() {
       let filteredMovies = this.movies;
 
-      if (this.filters.genre) {
-        filteredMovies = filteredMovies.filter(
-          (movie) => movie.genre_id === parseInt(this.filters.genre)
-        );
+      if (this.filters.voted === 1) {
+        filteredMovies = filteredMovies.filter((movie) => movie.vote_average > 8);
+      } else if (this.filters.voted === 2) {
+        filteredMovies = filteredMovies.filter((movie) => movie.vote_average >= 6 && movie.vote_average <= 8);
+      } else if (this.filters.voted === 3) {
+        filteredMovies = filteredMovies.filter((movie) => movie.vote_average < 6);
       }
 
-      if (this.filters.duration === "short") {
-        filteredMovies = filteredMovies.filter((movie) => movie.duration < 60);
-      } else if (this.filters.duration === "medium") {
-        filteredMovies = filteredMovies.filter(
-          (movie) => movie.duration >= 60 && movie.duration <= 120
+      if (this.filters.search) {
+        const searchTerm = this.filters.search.toLowerCase();
+        filteredMovies = filteredMovies.filter((movie) =>
+          movie.title.toLowerCase().includes(searchTerm)
         );
-      } else if (this.filters.duration === "long") {
-        filteredMovies = filteredMovies.filter((movie) => movie.duration > 120);
       }
 
       return filteredMovies;
     },
   },
-
   methods: {
     fetchMovies() {
       apiClient
@@ -100,5 +107,9 @@ export default {
 .card {
   width: 18rem;
   margin-bottom: 20px;
+}
+
+.lista{
+  min-height: 60vh;
 }
 </style>
